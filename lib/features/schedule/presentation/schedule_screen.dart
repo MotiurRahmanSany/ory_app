@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:ory/core/utils/utils.dart';
 import 'package:ory/features/schedule/presentation/schedule_controller.dart';
-import 'package:ory/features/services/event_details_screen.dart';
+import 'package:ory/features/schedule/presentation/event_details_screen.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../services/ai_scheduler_service.dart';
+import '../../../core/services/ai_scheduler_service.dart';
 import '../models/calendar_event.dart';
 
 class ScheduleScreen extends ConsumerStatefulWidget {
@@ -132,7 +132,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Smart Schedule'),
+        title: const Text('Sync Me'),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -147,6 +147,13 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Calendar Section
+                    Text(
+                      'let AI organize your tasks',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.surface,

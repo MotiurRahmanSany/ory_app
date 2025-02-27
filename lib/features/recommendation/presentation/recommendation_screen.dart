@@ -6,10 +6,21 @@ class RecommendationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AI-Powered Offers'), elevation: 0),
+      appBar: AppBar(
+        title: const Text('Deal Baba'),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: const [
+          Text(
+            'Unlock Exclusive AI-Powered Offers',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+
+          ),
+          SizedBox(height: 20),
+
           _OfferCard(
             title: "Smart Schedule Optimization",
             description:
@@ -27,14 +38,14 @@ class RecommendationScreen extends StatelessWidget {
             offerText: "15% Discount",
             color: Colors.green,
           ),
-          _OfferCard(
-            title: "AI Meal Planner",
-            description: "Unlock 20% more recipe suggestions this week",
-            icon: Icons.restaurant,
-            progress: 0.2,
-            offerText: "20% More Recipes",
-            color: Colors.orange,
-          ),
+          // _OfferCard(
+          //   title: "AI Meal Planner",
+          //   description: "Unlock 20% more recipe suggestions this week",
+          //   icon: Icons.restaurant,
+          //   progress: 0.2,
+          //   offerText: "20% More Recipes",
+          //   color: Colors.orange,
+          // ),
           _OfferCard(
             title: "Financial AI Assistant",
             description: "Free 1-month trial for budget optimization",

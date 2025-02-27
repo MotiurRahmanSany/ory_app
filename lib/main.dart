@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ory/config/route_path.dart';
 import 'package:ory/config/theme_provider.dart';
-import 'package:ory/core/common/constants/app_secret.dart';
 import 'package:ory/core/common/constants/constants.dart';
 import 'package:ory/features/home/presentation/home_screen.dart';
-import 'package:ory/features/payment/presentation/payment_screen.dart';
+import 'package:ory/features/payment/presentation/budget_planner_screen.dart';
 import 'package:ory/features/prescription/presentation/prescription_screen.dart';
 import 'package:ory/features/schedule/presentation/schedule_screen.dart';
 import 'package:ory/features/recommendation/presentation/recommendation_screen.dart';
@@ -32,7 +31,7 @@ class MyApp extends ConsumerWidget {
         RoutePath.prescription: (context) => const PrescriptionScreen(),
         RoutePath.workScheduling: (context) => const ScheduleScreen(),
         RoutePath.recommendation: (context) => const RecommendationScreen(),
-        RoutePath.makePayment: (context) => const PaymentScreen(),
+        RoutePath.makePayment: (context) => const BudgetPlannerScreen(),
       },
     );
   }

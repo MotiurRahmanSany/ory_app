@@ -37,21 +37,18 @@ dependencies:
   flutter_riverpod: ^2.6.1
   gap: ^3.0.1
   google_fonts: ^6.2.1
-  fpdart: ^1.1.1
   image_picker: ^1.1.2
   intl: ^0.20.2
-  riverpod_annotation: ^2.6.1
   dio: ^5.8.0+1
-  shared_preferences: ^2.5.2
-  path_provider: ^2.1.5
   table_calendar: ^3.2.0
   shimmer: ^3.0.0
-  skeletonizer: ^1.4.3
   flutter_markdown: ^0.7.6+2
   lottie: ^3.3.1
   flutter_image_compress: ^2.4.0
   google_generative_ai: ^0.4.6
   logger: ^2.5.0
+  fl_chart: ^0.70.2
+  carousel_slider: ^5.0.0
   
 
 dev_dependencies:

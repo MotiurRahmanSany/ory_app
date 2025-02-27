@@ -80,7 +80,12 @@ class _PrescriptionScreenState extends ConsumerState<PrescriptionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('AI Health Assistant')),
+      appBar: AppBar(
+        title: const Text('Medi Mind',
+           ),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

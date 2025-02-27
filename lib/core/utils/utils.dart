@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +6,8 @@ import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart' as path;
 
 // This function is used to show a message to the user accross the app
+
+enum BudgetPeriod { monthly, weekly, daily }
 
 void showMessageToUser(context, {required String message}) {
   ScaffoldMessenger.of(context)
@@ -22,7 +23,6 @@ void showMessageToUser(context, {required String message}) {
     );
 }
 
-
 final printLog = Logger();
 
 // This function is used to pick image from gallery or camera
@@ -37,13 +37,6 @@ Future<XFile?> pickImageFromGallery() async {
 Future<XFile?> takeImageWithCamera() async {
   final pickedImage = await _picker.pickImage(source: ImageSource.camera);
   return pickedImage;
-}
-
-void copyTextToChipboard(BuildContext context, String value) async {
-  await Clipboard.setData(ClipboardData(text: value));
-  ScaffoldMessenger.of(
-    context,
-  ).showSnackBar(const SnackBar(content: Text('Copied to clipboard')));
 }
 
 String doctorsList = '''

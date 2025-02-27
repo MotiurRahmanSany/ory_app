@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ory/config/route_path.dart';
 import 'package:ory/config/theme_provider.dart';
+import 'package:ory/core/common/constants/app_secret.dart';
 import 'package:ory/core/common/constants/constants.dart';
 import 'package:ory/features/home/presentation/home_screen.dart';
 import 'package:ory/features/payment/presentation/payment_screen.dart';
@@ -12,7 +13,8 @@ import 'package:ory/features/recommendation/presentation/recommendation_screen.d
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+ 
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {

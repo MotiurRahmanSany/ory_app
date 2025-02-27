@@ -68,6 +68,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
       );
     } finally {
       ref.read(scheduleProvider.notifier).setLoading(false);
+      _taskController.clear();
     }
   }
 
@@ -296,7 +297,7 @@ Widget _buildShimmerLoading(BuildContext context) {
               ),
             ),
           ),
-        )
+        ),
       ],
     ),
   );

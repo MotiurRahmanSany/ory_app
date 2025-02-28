@@ -83,7 +83,7 @@ class Savings {
     return Savings(
       percentage: (json['percentage'] as num).toDouble(),
       amount: (json['amount'] as num).toDouble(),
-      timeSavedHours: json['time_saved_hours'],
+      timeSavedHours: (json['time_saved_hours'] as num).round(),
     );
   }
 

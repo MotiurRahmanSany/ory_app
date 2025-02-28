@@ -21,7 +21,7 @@ class BudgetAIService {
   }) async {
     final prompt = '''
 Generate a comprehensive budget plan with these parameters:
-- Monthly Income: \$$income
+- Monthly Income: ৳$income
 - Currency: BDT (Bangladeshi Taka)
 - Budget Period: ${period.name}
 - Categories: ${categories.join(', ')}

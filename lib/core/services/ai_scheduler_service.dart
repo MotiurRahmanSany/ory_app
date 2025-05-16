@@ -6,7 +6,7 @@ import '../../features/schedule/models/calendar_event.dart';
 import '../../features/schedule/models/schedule_suggestion.dart';
 
 class AISchedulerService {
-  static const String _apiKey = AppSecret.geminiApiKey;
+  static final String _apiKey = AppSecret.geminiApiKey;
   final GenerativeModel _model;
 
   AISchedulerService()

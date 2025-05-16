@@ -8,7 +8,7 @@ import '../common/constants/constants.dart';
 import '../utils/utils.dart';
 
 class BudgetAIService {
-  static const String _apiKey = AppSecret.geminiApiKey;
+  static final String _apiKey = AppSecret.geminiApiKey;
   final GenerativeModel _model;
 
   BudgetAIService()

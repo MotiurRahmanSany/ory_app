@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:ory/config/route_path.dart';
 import 'package:ory/config/theme_provider.dart';
@@ -11,6 +12,11 @@ import 'package:ory/features/recommendation/presentation/recommendation_screen.d
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await dotenv.load(fileName: ".env"); // Load environment variables
+  } catch (e) {
+    throw Exception('Error loading .env file: $e'); // Print error if any
+  }
 
  
   runApp(ProviderScope(child: MyApp()));

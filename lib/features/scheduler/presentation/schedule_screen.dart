@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
+import 'package:ory/core/common/widgets/shimmer_loader.dart';
 import 'package:ory/core/utils/utils.dart';
-import 'package:ory/features/schedule/presentation/schedule_controller.dart';
-import 'package:ory/features/schedule/presentation/event_details_screen.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:ory/features/scheduler/presentation/schedule_controller.dart';
+import 'package:ory/features/scheduler/presentation/event_details_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../core/common/widgets/animated_ai_logo.dart';
 import '../../../core/services/ai_scheduler_service.dart';
 import '../models/calendar_event.dart';
 
@@ -22,8 +23,10 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   final TextEditingController _taskController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   Future<void> _generateSchedule() async {
-    if (_selectedDay == null) return;
+    if (!_formKey.currentState!.validate()) return;
+    Navigator.pop(context);
 
     ref.read(scheduleProvider.notifier).setLoading(true);
     try {
@@ -77,32 +80,49 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
     ref.read(scheduleProvider.notifier).deleteEvent(_selectedDay!, event);
   }
 
+  void _instructToSelectDate() {
+    ScaffoldMessenger.of(context)
+      ..clearSnackBars()
+      ..showSnackBar(
+        const SnackBar(
+          content: Text('Please select a date from the calendar'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+  }
+
   void _showScheduleTaskDialog() {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Schedule Task'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _taskController,
-                decoration: const InputDecoration(
-                  labelText: 'Describe your task',
-                  hintText: 'e.g. "Need 2 hours for project meeting tomorrow"',
+          title: const Text('Task To Complete'),
+          content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _taskController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a task';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    labelText: 'Describe your task',
+                    hintText:
+                        'e.g. "Need 2 hours for project meeting tomorrow"',
+                  ),
+                  maxLines: 3,
                 ),
-                maxLines: 3,
-              ),
-              const SizedBox(height: 16),
-              ListTile(
-                title: Text(
-                  _selectedDay != null
-                      ? DateFormat('MMM dd, yyyy').format(_selectedDay!)
-                      : 'Select a date from calendar',
+                const SizedBox(height: 16),
+                ListTile(
+                  title: Text(DateFormat('MMM dd, yyyy').format(_selectedDay!)),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -111,10 +131,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                if (_selectedDay != null && _taskController.text.isNotEmpty) {
-                  Navigator.pop(context);
-                  _generateSchedule();
-                }
+                _generateSchedule();
               },
               child: const Text('Generate Schedule'),
             ),
@@ -132,7 +149,15 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sync Me'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedAiLogo(isAnimating: false, size: 35),
+            const SizedBox(width: 8),
+            const Text('Sync Me'),
+          ],
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -140,7 +165,7 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
       ),
       body:
           scheduleState.isLoading
-              ? _buildShimmerLoading(context)
+              ? ShimmerLoader(loadingText: 'Loading your schedule...')
               : SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -229,7 +254,10 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
                 ),
               ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: _showScheduleTaskDialog,
+        onPressed:
+            _selectedDay != null
+                ? _showScheduleTaskDialog
+                : _instructToSelectDate,
         icon: const Icon(Icons.add, size: 28),
         label: const Text('Schedule Task'),
         elevation: 2,
@@ -237,77 +265,6 @@ class _ScheduleScreenState extends ConsumerState<ScheduleScreen> {
       ),
     );
   }
-}
-
-Widget _buildShimmerLoading(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Stack(
-      children: [
-        Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Calendar Shimmer
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
-              const SizedBox(height: 32),
-              // Scheduled Tasks Header Shimmer
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                height: MediaQuery.of(context).size.height * 0.02,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-              const SizedBox(height: 16),
-              // Event List Shimmer
-              Column(
-                children: List.generate(
-                  3,
-                  (index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.1,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-
-        // a centered text saying Generating Schedule with AI...
-        Positioned(
-          top: MediaQuery.of(context).size.height * 0.5,
-          left: 0,
-          right: 0,
-          child: Center(
-            child: Text(
-              'Generating Schedule with AI...',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
 }
 
 Widget _buildEmptyState() {

@@ -3,14 +3,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:ory/core/common/constants/constants.dart';
+import 'package:ory/core/common/widgets/shimmer_loader.dart';
 import 'package:ory/core/common/constants/app_secret.dart';
+import 'package:ory/core/common/widgets/animated_ai_logo.dart';
 
 class SuggestionScreen extends StatefulWidget {
   final String prompt;
   final File? image;
   final String? userInput;
-  const SuggestionScreen({super.key, required this.prompt, this.image, this.userInput });
+  const SuggestionScreen({
+    super.key,
+    required this.prompt,
+    this.image,
+    this.userInput,
+  });
 
   @override
   State<SuggestionScreen> createState() => _SuggestionScreenState();
@@ -115,7 +122,16 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Analysis'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedAiLogo(isAnimating: _isLoading, size: Constants.titleLogoSize),
+            const SizedBox(width: 8),
+            const Text('AI Analysis'),
+          ],
+        ),
+        centerTitle: true,
         actions: [
           if (_hasError)
             IconButton(icon: const Icon(Icons.refresh), onPressed: _retry),
@@ -133,22 +149,24 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
                 _buildUserInputCard(widget.userInput!),
                 const SizedBox(height: 20),
               ],
-        
+
               // Uploaded Image Preview
               if (widget.image != null) ...[
                 _buildSectionHeader('Prescription Image'),
                 _buildImagePreview(),
                 const SizedBox(height: 20),
               ],
-        
+
               // Analysis Section
               _buildSectionHeader('AI Analysis'),
               const SizedBox(height: 16),
-        
+
               // Response Area
               SizedBox(
                 height: 600,
-                child: _isLoading ? _buildShimmerLoader() : _buildResponseArea(),
+                child: _isLoading 
+                  ? ShimmerLoader(loadingText: 'Analyzing medical data...')
+                  : _buildResponseArea(),
               ),
             ],
           ),
@@ -196,26 +214,7 @@ class _SuggestionScreenState extends State<SuggestionScreen> {
     );
   }
 
-  Widget _buildShimmerLoader() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey.shade300,
-      highlightColor: Colors.grey.shade100,
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: List.generate(
-          5,
-          (index) => Container(
-            height: 20 + (index * 24.0),
-            margin: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(4),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+ 
 
   Widget _buildResponseArea() {
     return Card(

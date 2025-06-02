@@ -5,10 +5,10 @@ import 'package:ory/config/route_path.dart';
 import 'package:ory/config/theme_provider.dart';
 import 'package:ory/core/common/constants/constants.dart';
 import 'package:ory/features/home/presentation/home_screen.dart';
-import 'package:ory/features/payment/presentation/budget_planner_screen.dart';
-import 'package:ory/features/prescription/presentation/prescription_screen.dart';
-import 'package:ory/features/schedule/presentation/schedule_screen.dart';
-import 'package:ory/features/recommendation/presentation/recommendation_screen.dart';
+import 'package:ory/features/budget_planner/presentation/budget_planner_screen.dart';
+import 'package:ory/features/health_care/presentation/prescription_screen.dart';
+import 'package:ory/features/scheduler/presentation/schedule_screen.dart';
+import 'package:ory/features/app_recommendation/presentation/recommendation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

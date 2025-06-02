@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:ory/features/schedule/models/calendar_event.dart';
+import 'package:ory/features/scheduler/models/calendar_event.dart';
 
 class EventDetailsScreen extends StatelessWidget {
   static route(context, ev) => Navigator.push(

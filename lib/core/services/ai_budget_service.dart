@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:ory/core/common/constants/app_secret.dart';
 
-import '../../features/payment/models/budget_plan.dart';
+import '../../features/budget_planner/models/budget_plan.dart';
 import '../common/constants/constants.dart';
 import '../utils/utils.dart';
 

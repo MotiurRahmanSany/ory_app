@@ -1,6 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ory/config/route_path.dart';
+import 'package:ory/core/common/constants/constants.dart';
 import 'package:ory/features/home/presentation/widgets/feature_widget.dart';
 import 'package:ory/features/home/presentation/widgets/offer_banner_widget.dart';
 
@@ -46,8 +48,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'AI Life Assistant',
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              Constants.svgLogo,
+              height: 50,
+
+            ),
+            const SizedBox(width: 8),
+            const Text('AI Life Assistant'),
+          ],
         ),
         elevation: 0,
         centerTitle: true,

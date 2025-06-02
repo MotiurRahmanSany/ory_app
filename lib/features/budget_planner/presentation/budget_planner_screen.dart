@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ory/core/common/constants/constants.dart';
+import 'package:ory/core/common/widgets/animated_ai_logo.dart';
+import 'package:ory/core/common/widgets/shimmer_loader.dart';
 import 'package:ory/core/utils/utils.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../core/services/ai_budget_service.dart';
-import 'generated_plan_screen.dart';
+import 'generated_budget_plan_screen.dart';
 
 class BudgetPlannerScreen extends StatefulWidget {
   const BudgetPlannerScreen({super.key});
@@ -85,14 +87,25 @@ class _BudgetPlannerScreenState extends State<BudgetPlannerScreen> {
       child: Scaffold(
         backgroundColor: _backgroundColor,
         appBar: AppBar(
-          title: const Text('Budget Genie AI'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AnimatedAiLogo(
+                isAnimating: _isLoading,
+                size: Constants.titleLogoSize,
+              ),
+              const SizedBox(width: 8),
+              const Text('Budget Genie'),
+            ],
+          ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
         body:
             _isLoading
-                ? _buildShimmerLoader()
+                ? ShimmerLoader(loadingText: 'Generating your plan...')
                 : SafeArea(
                   child: SingleChildScrollView(
                     child: Padding(
@@ -236,83 +249,6 @@ class _BudgetPlannerScreenState extends State<BudgetPlannerScreen> {
       ),
     );
   }
-
-  Widget _buildShimmerLoader() {
-    return Stack(
-      children: [
-        Shimmer.fromColors(
-          baseColor: Colors.grey.shade300,
-          highlightColor: Colors.grey.shade100,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Container(
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(width: 150, height: 20, color: Colors.white),
-                    const SizedBox(height: 10),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: List.generate(
-                        6,
-                        (index) => Container(
-                          width: 100,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 50),
-                Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Generating Budget...
-        Positioned(
-          top: 155,
-          right: 60,
-          child: Text(
-            'Generating Budget...',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 class _CategoryChip extends StatelessWidget {
@@ -347,4 +283,3 @@ class _CategoryChip extends StatelessWidget {
     );
   }
 }
-

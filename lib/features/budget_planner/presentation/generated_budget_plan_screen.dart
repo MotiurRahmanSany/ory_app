@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+import '../../../core/common/constants/constants.dart';
+import '../../../core/common/widgets/animated_ai_logo.dart';
 import '../models/budget_plan.dart';
 
 class GeneratedPlanScreen extends StatelessWidget {
@@ -12,8 +14,20 @@ class GeneratedPlanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your AI Budget Plan'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedAiLogo(
+              isAnimating: false,
+              size: Constants.titleLogoSize,
+            ),
+            const SizedBox(width: 8),
+            const Text('Budget Plan'),
+          ],
+        ),
         centerTitle: true,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -22,8 +36,8 @@ class GeneratedPlanScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Budget Plan for You 🎉',
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              'Here is your Budget Plan 🎉',
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             _buildHeader(),

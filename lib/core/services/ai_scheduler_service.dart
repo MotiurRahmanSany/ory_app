@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:ory/core/common/constants/app_secret.dart';
 import 'package:ory/core/utils/utils.dart';
-import '../../features/schedule/models/calendar_event.dart';
-import '../../features/schedule/models/schedule_suggestion.dart';
+import '../../features/scheduler/models/calendar_event.dart';
+import '../../features/scheduler/models/schedule_suggestion.dart';
 
 class AISchedulerService {
   static final String _apiKey = AppSecret.geminiApiKey;
